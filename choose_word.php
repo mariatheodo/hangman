@@ -20,7 +20,7 @@ if (mysqli_num_rows($result) > 0) {
 	//print_r($word);
 }
 mysqli_close($conn);
-//$_SESSION['word'] = $word;
+$_SESSION['word'] = $word;
 
 
 ?>

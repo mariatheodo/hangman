@@ -32,12 +32,14 @@
 <body>
 	<div class="container">
 		<?php 
-			session_start();
 			
+			session_start();
 			include_once 'connect.php';
 			include_once 'choose_word.php';
 			
-			include 'play.php';
+			$_SESSION['word'] = $word;
+			header("Location:play.php");
+			
 			
 
 		?>
