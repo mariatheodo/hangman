@@ -12,29 +12,31 @@ if (!isset($_SESSION['word'])) {
 	include_once 'connect.php';
 	include_once 'choose_word.php';
 	$_SESSION['lives'] = 5;
+	//$word = $_SESSION['word'];
+
+	$len = mb_strlen($word);
+	$_SESSION['word_array'] = mb_str_split($word);
+	$print_word = array();
+	$print_word[0] = $_SESSION['word_array'][0];
+	for ($i = 1; $i < $len - 1; $i++) {
+		$print_word[$i] = "_";
+	}
+	$print_word[$len - 1] = $_SESSION['word_array'][$len - 1];
+	$_SESSION['print_word'] = $print_word;
 }
 
 //echo $word."<br />";
 
 
-$word = $_SESSION['word'];
 
-$len = mb_strlen($word);
-$word_array = mb_str_split($word);
-$print_word = array();
-$print_word[0] = $word_array[0];
-for ($i = 1; $i < $len - 1; $i++) {
-	$print_word[$i] = "_";
-}
-$print_word[$len - 1] = $word_array[$len - 1];
-$_SESSION['print_word'] = $print_word;
 
 
 echo "<br />";
 
 if (isset($_POST['letter'])) {
-	if (in_array($_POST['letter'], $word_array) === FALSE) {
+	if (in_array($_POST['letter'], $_SESSION['word_array']) === FALSE) {
 		--$_SESSION['lives'];
+		echo "<p> Λυπάμαι, το γράμμα που διάλεξες δεν υπάρχει στη λέξη</p>";
 	}
 	$letter = $_POST["letter"];
 }
@@ -44,24 +46,24 @@ else {
 
 
 if ($_SESSION['lives'] == 0) {
-	echo "<p> Έπαιζες με τη λέξη ".$word."</p>";
+	echo "<p> Οι προσπάθειές σου τελείωσαν. Έπαιζες με τη λέξη ".$_SESSION['word']."</p>";
 	echo "<p> <a href='play.php'>Θέλεις να ξαναπαίξεις;</p>";
 	unset($_SESSION['word']);
 }
 else {
 		
 	
-	$keys = array_keys($word_array, $letter);
+	$keys = array_keys($_SESSION['word_array'], $letter);
 	
 	for ($i=0; $i < count($keys); $i++) {
-		$print_word[$keys[$i]] = $letter;
+		$_SESSION['print_word'][$keys[$i]] = $letter;
 	}
-	for ($i = 0; $i < count($print_word); $i++) {
-		echo "<span id='game'>$print_word[$i] </span>";
+	for ($i = 0; $i < count($_SESSION['print_word']); $i++) {
+		echo "<span id='game'>".$_SESSION['print_word'][$i]." </span>";
 	}
 	
-	if (!in_array('_', $print_word)) {
-		echo "\n\n" . '  <p><a href="play.php">Θέλεις να παίξεις ξανά?</a></p>';
+	if (!in_array('_', $_SESSION['print_word'])) {
+		echo "\n\n" . '  <p><a href="play.php">Μπράβο! Θέλεις να παίξεις ξανά?</a></p>';
 		unset($_SESSION['word']);
 	}
 }
