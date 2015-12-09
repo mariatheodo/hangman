@@ -34,7 +34,9 @@
 		<?php 
 			
 			session_start();
-			include_once 'connect.php';
+			if (!isset($_SESSION['word'])) {
+				include_once 'connect.php';
+			}
 			include_once 'choose_word.php';
 			
 			$_SESSION['word'] = $word;
