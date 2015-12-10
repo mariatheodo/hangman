@@ -24,41 +24,16 @@
 		margin-left: 0px !important;
 		}
 	</style>
-
-
-
 </head>
 
 <body>
 	<div class="container">
 		<?php 
-			
-			session_start();
-			if (!isset($_SESSION['word'])) {
-				include_once 'connect.php';
-			}
-			include_once 'choose_word.php';
-			
-			$_SESSION['word'] = $word;
-			header("Location:play.php");
-			
-			
 
+			header("Location:play.php");
 		?>
 		<br />
-		
-		
-		
-			
-			
-			
-
-
-		
-		
-    
 	</div>
 
-  
 </body>
 </html>

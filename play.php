@@ -8,14 +8,14 @@ session_start();
 
 <body>
 <?php
-if (!isset($_SESSION['word'])) {
+if (!isset($_SESSION['word'])) {											//αν ξεκινάει session διαλέγει λέξη
 	include_once 'connect.php';
 	include_once 'choose_word.php';
 	$_SESSION['lives'] = 5;
 	//$word = $_SESSION['word'];
 
-	$len = mb_strlen($word);
-	$_SESSION['word_array'] = mb_str_split($word);
+	$len = mb_strlen($word);											
+	$_SESSION['word_array'] = mb_str_split($word);							//μετατροπή σε πίνακα
 	$print_word = array();
 	$print_word[0] = $_SESSION['word_array'][0];
 	for ($i = 1; $i < $len - 1; $i++) {
@@ -25,15 +25,9 @@ if (!isset($_SESSION['word'])) {
 	$_SESSION['print_word'] = $print_word;
 }
 
-//echo $word."<br />";
-
-
-
-
-
 echo "<br />";
 
-if (isset($_POST['letter'])) {
+if (isset($_POST['letter'])) {												//έλεγχος γράμματος
 	if (in_array($_POST['letter'], $_SESSION['word_array']) === FALSE) {
 		--$_SESSION['lives'];
 		echo "<p> Λυπάμαι, το γράμμα που διάλεξες δεν υπάρχει στη λέξη</p>";
@@ -44,16 +38,14 @@ else {
 	$letter = '';
 }
 
-
-if ($_SESSION['lives'] == 0) {
+if ($_SESSION['lives'] == 0) {												//τελειώνουν οι προσπάθειες
 	echo "<p> Οι προσπάθειές σου τελείωσαν. Έπαιζες με τη λέξη ".$_SESSION['word']."</p>";
 	echo "<p> <a href='play.php'>Θέλεις να ξαναπαίξεις;</p>";
 	unset($_SESSION['word']);
 }
 else {
-		
-	
-	$keys = array_keys($_SESSION['word_array'], $letter);
+			
+	$keys = array_keys($_SESSION['word_array'], $letter);					//το γράμμα υπάρχει στη λέξη
 	
 	for ($i=0; $i < count($keys); $i++) {
 		$_SESSION['print_word'][$keys[$i]] = $letter;
@@ -62,19 +54,15 @@ else {
 		echo "<span id='game'>".$_SESSION['print_word'][$i]." </span>";
 	}
 	
-	if (!in_array('_', $_SESSION['print_word'])) {
+	if (!in_array('_', $_SESSION['print_word'])) {							//η λέξη συμπληρώθηκε
 		echo "\n\n" . '  <p><a href="play.php">Μπράβο! Θέλεις να παίξεις ξανά?</a></p>';
 		unset($_SESSION['word']);
 	}
 }
 
-
-
-
-
 function mb_str_split($string) { 
 
-    return preg_split('/(?<!^)(?!$)/u', $string ); 	// σπαω το string σε array χαρακτηρων, δεν δουλεύει η str_split
+    return preg_split('/(?<!^)(?!$)/u', $string ); 							// σπαω το string σε array χαρακτηρων, δεν δουλεύει η str_split
 } 
 ?>
 
