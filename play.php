@@ -1,48 +1,6 @@
 <?php
 session_start();
-?>
-
-<!DOCTYPE html>
-
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Hangman Game (Κρεμάλα)</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link href='https://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'>
-	<script src="js/bootstrap.js"></script>
-	
-	<script src="css/config.json"></script>
-	<style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
-		.en-markup-crop-options {
-		top: 18px !important;
-		left: 50% !important;
-		margin-left: -100px !important;
-		width: 200px !important;
-		border: 2px rgba(255,255,255,.38) solid !important;
-		border-radius: 4px !important;
-		}
-
-		.en-markup-crop-options div div:first-of-type {
-		margin-left: 0px !important;
-		}
-	</style>
-
-
-
-</head>
-
-<body>
-<body>
-	<div class="container">
-		<div class="row">
-			<div class="page-header">
-				<h1>ΚΡΕΜΑΛΑ</h1>
-			</div>
-		</div>
-		<div class="jumbotron main-page">
-<?php
+include_once 'header.html';
 
 echo "<h2>Καλωσήρθες ".$_SESSION['player']."</h2><br />";
 
@@ -52,7 +10,7 @@ if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει sess
 	include_once 'choose_word.php';
 
 	$_SESSION['tries_left'] = $_SESSION['lives'];
-
+	
 	$len = mb_strlen($word);											
 	$_SESSION['word_array'] = mb_str_split($word);							//μετατροπή σε πίνακα
 	$print_word = array();
@@ -62,6 +20,7 @@ if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει sess
 	}
 	$print_word[$len - 1] = $_SESSION['word_array'][$len - 1];
 	$_SESSION['print_word'] = $print_word;
+
 }
 
 echo "<br />";
@@ -75,13 +34,19 @@ if (isset($_POST['letter'])) {												//έλεγχος γράμματος
 }
 else {
 	$letter = '';
+	echo "<br /><br />";
 }
 
-if ($_SESSION['tries_left'] == 0) {												//τελειώνουν οι προσπάθειες
+if ($_SESSION['tries_left'] <= 0) {												
 	echo "<h4> Οι προσπάθειές σου τελείωσαν. Έπαιζες με τη λέξη ".$_SESSION['word']."</h4>";
-	echo "<h4> <a href='play.php'>Θέλεις να ξαναπαίξεις;</a></h4>";
-	unset($_SESSION['word']);
 	
+	echo "<br />";
+	echo "<br />";
+	play_again();
+
+	
+	
+
 }
 else {
 	echo "<h4>Έχεις ".$_SESSION['tries_left']." προσπάθειες</h4> <br />";		
@@ -96,30 +61,45 @@ else {
 	}
 	
 	if (!in_array('_', $_SESSION['print_word'])) {							//η λέξη συμπληρώθηκε
-		echo "\n\n" . '  <p><a href="play.php">Μπράβο! Θέλεις να ξαναπαίξεις;</a></p>';
-		unset($_SESSION['word']);
+		switch ($_SESSION['lives']) {
+			case '10':
+				$points = 20 + $_SESSION['tries_left'] * 10;
+				break;
+			case '7':
+				$points = 50 + $_SESSION['tries_left'] * 15;
+				break;
+			case '5':
+				$points = 80 + $_SESSION['tries_left'] * 20;
+				break;
+		}
+		$_SESSION['points'] += $points;
+		echo "<br />";
+		echo "<br />";
+		play_again();
 	}
 	echo "</h4>";
 }
 
 function mb_str_split($string) { 
 
-    return preg_split('/(?<!^)(?!$)/u', $string ); 							// σπαω το string σε array χαρακτηρων, δεν δουλεύει η str_split
+    return preg_split('/(?<!^)(?!$)/u', $string ); 							//σπαω το string σε array χαρακτηρων, δεν δουλεύει η str_split
 } 
+
+function play_again() {
+	echo '<div class="col-lg-6">Έχεις συγκεντρώσει '.$_SESSION['points'].' πόντους</div>
+		<div class="col-lg-4">Θέλεις να ξαναπαίξεις;</div><br />';
+	echo '<a href="new_game.php?new=true"><button class="btn-sm">ΝΑΙ</button></a>';
+	echo '<a href="new_game.php?new=false"><button class="btn-sm">OXI</button></a>';
+}
 ?>
 	<?php $letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω']; ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 	<h4>Δώσε ένα γράμμα:</h4><br />
 	<?php
 	for ($i = 0; $i < 24; $i++) {
-		echo "<input class='btn-sm' id='$letters[$i]' type='submit' name='letter' value=$letters[$i] onclick=disable()>";
+		echo "<input class='btn-sm' id='$letters[$i]' type='submit' name='letter' value=$letters[$i]>";		//να κάνω τα κουμπιά disabled!!!!!!!
 	} 
 	?>
-	
-	<script>
-		function disable() {
-			document.getElementById("<?php $_POST['letter'] ?>").disabled = true; }
-	</script>
 	
 	</form>
 	</div>
