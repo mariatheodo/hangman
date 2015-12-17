@@ -32,7 +32,7 @@
 <body>
 	<?php 
 	if (isset($_POST['name']) && $_POST['name'] == '123456') {
-		header("Location: admin_page.php");
+		header("Location: admin_pages.php");
 	}
 	else { ?>
 	<div class="container">

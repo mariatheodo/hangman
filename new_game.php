@@ -1,6 +1,6 @@
 <?php
 session_start();
-echo $_GET['new'];
+
 if ($_GET['new'] == 'false') {
 	include_once 'connect.php';
 	$player = $_SESSION['player'];
@@ -14,7 +14,7 @@ if ($_GET['new'] == 'false') {
 	mysqli_close($conn);
 	session_unset();
 	session_destroy();
-	header("Location: index.html");
+	header("Location: index.php");
 }
 else {
 	unset($_SESSION['word']);

@@ -17,7 +17,13 @@ else {
 	}
 	
 	mysqli_close($conn);
-	$_SESSION['lives'] = $_POST['level'];
+	if (isset($_POST['level'])) {
+		$_SESSION['lives'] = $_POST['level'];
+	}
+	else {
+		$_SESSION['lives'] = 5;
+	}
+	
 	$_SESSION['points'] = 0;
 	header("Location: play.php");
 }

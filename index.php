@@ -6,7 +6,7 @@ include_once 'header.html';
 			<h3>Επίπεδο δυσκολίας: </h3>
 			<form action="player.php" method="POST">
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-sm-6">
 					<div class="input-group">
 						<span class="input-group-addon">
 							<input type="radio" name="level" value="10">
@@ -16,7 +16,7 @@ include_once 'header.html';
 				</div> 
 			</div>
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-sm-6">
 					<div class="input-group">
 						<span class="input-group-addon">
 							<input type="radio" name="level" value="7">
@@ -26,7 +26,7 @@ include_once 'header.html';
 				</div>
 			</div>		
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-sm-6">
 					<div class="input-group">
 						<span class="input-group-addon">
 							<input type="radio" name="level" value="5">

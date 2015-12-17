@@ -30,11 +30,13 @@ if (isset($_POST['letter'])) {												//έλεγχος γράμματος
 		--$_SESSION['tries_left'];
 		echo "<h4> Λυπάμαι, το γράμμα που διάλεξες δεν υπάρχει στη λέξη</h4>";
 	}
+	else {
+		echo "<h4><br /></h4>";
+	}
 	$letter = $_POST["letter"];
 }
 else {
 	$letter = '';
-	echo "<br /><br />";
 }
 
 if ($_SESSION['tries_left'] <= 0) {												
@@ -86,8 +88,8 @@ function mb_str_split($string) {
 } 
 
 function play_again() {
-	echo '<div class="col-lg-6">Έχεις συγκεντρώσει '.$_SESSION['points'].' πόντους</div>
-		<div class="col-lg-4">Θέλεις να ξαναπαίξεις;</div><br />';
+	echo '<div class="col-sm-6">Έχεις συγκεντρώσει '.$_SESSION['points'].' πόντους</div>
+		<div class="col-sm-6">Θέλεις να ξαναπαίξεις;</div><br />';
 	echo '<a href="new_game.php?new=true"><button class="btn-sm">ΝΑΙ</button></a>';
 	echo '<a href="new_game.php?new=false"><button class="btn-sm">OXI</button></a>';
 }
