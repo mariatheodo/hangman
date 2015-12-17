@@ -4,11 +4,11 @@ if (isset($_POST['back'])) {
 }
 
 include_once 'header.html';
-echo "<h2>Λίστα παιχνιδιών</h2>";
+echo "<h2>Λίστα λέξεων</h2>";
 include_once 'connect.php';
 $a="COUNT(*)";															
 							
-	$count = "SELECT $a FROM games;";										
+	$count = "SELECT $a FROM words;";										
 
 	$result = mysqli_query($conn, $count);								
 	$row = mysqli_fetch_assoc($result);
@@ -29,7 +29,7 @@ $a="COUNT(*)";
 
 
 
-$sql2 = "SELECT gid, user, points, time FROM games, users WHERE games.uid=users.uid ORDER BY gid LIMIT $offset, $limit;";						
+$sql2 = "SELECT wid, word FROM words ORDER BY wid LIMIT $offset, $limit;";						
 $lines = mysqli_query($conn, $sql2); 
 ?>
 
@@ -37,22 +37,16 @@ $lines = mysqli_query($conn, $sql2);
 	<thead>
 		<tr>
 			<th>Α/Α</th>
-			<th>Όνομα παίκτη</th>
-			<th>Σκορ</th>
-			<th>Ώρα παιχνιδιού</th>
+			<th>Λέξη</th>
 			<th>Διαγραφή</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php while($row = mysqli_fetch_assoc($lines)) {?>
 				<tr>
-					<td><?php echo $row['gid']; ?></td>
-					<td><?php echo $row['user']; ?></td>
-					<td><?php echo $row['points']; ?></td>
-					<td><?php echo $row['time']; ?></td>
-					<td><a href='delete_games.php?game=<?php echo $row['gid'] ?>'>OK </a></td>
-
-</form>
+					<td><?php echo $row['wid']; ?></td>
+					<td><?php echo $row['word']; ?></td>
+					<td><a href='delete_words.php?word=<?php echo $row['wid'] ?>'>OK </a></td>
 				</tr>
 		<?php }  ?>
 	
@@ -63,22 +57,22 @@ $next = $page + 1;
 $last = $page - 1;
 if ($page == 0) {
 		if ($num > $limit) {
-			echo "<a href='admin_games.php?page=".$next."'>Επόμενα ".$limit." παιχνίδια</a>";
+			echo "<a href='admin_words.php?page=".$next."'>Επόμενες ".$limit." λέξεις</a>";
 		}
 		else {}
 	}
 	else if ($page > 0 && $left > $limit) {
-		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα ".$limit." παιχνίδια</a> | ";
-		echo "<a href='admin_games.php?page=".$next."'>Επόμενα ".$limit." παιχνίδια</a>";
+		echo "<a href='admin_words.php?page=".$last."'>Προηγούμενες ".$limit." λέξεις</a> | ";
+		echo "<a href='admin_words.php?page=".$next."'>Επόμενες ".$limit." λέξεις</a>";
 	}
 	else if($left < $limit) {
-		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα ".$limit." παιχνίδια</a>";
+		echo "<a href='admin_words.php?page=".$last."'>Προηγούμενες ".$limit." λέξεις</a>";
 	}
 	mysqli_close($conn);
 ?>
 <br />
 
-<form action="admin_games.php" method="POST">
+<form action="admin_words.php" method="POST">
 	<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
 </form>
 </div>

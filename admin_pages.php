@@ -11,7 +11,7 @@ include_once 'header.html';
 			<input class="btn btn-default btn-sm" type="submit" value="Διαχείριση παιχνιδιών" formaction="admin_games.php">
 			<input class="btn btn-default btn-sm" type="submit" value="Διαχείριση παικτών" formaction="admin_players.php">
 			<br />
-			<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
+			<input class="btn btn-default btn-lg" type="submit" value="Πίσω" name="back">
 		</form>
 	</div>
 
