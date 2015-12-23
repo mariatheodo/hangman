@@ -2,7 +2,7 @@
 session_start();
 include_once 'header.html';
 
-echo "<h2>Καλωσήρθες ".$_SESSION['player']."</h2><br />";
+echo "<h2>Καλωσήρθες ".$_SESSION['player']."</h2>";
 
 
 if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει session διαλέγει λέξη
@@ -20,12 +20,13 @@ if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει sess
 	}
 	$print_word[$len - 1] = $_SESSION['word_array'][$len - 1];
 	$_SESSION['print_word'] = $print_word;
-
+	$_SESSION['used'] = array();
 }
 
-echo "<br />";
+//echo "<br />";
 
 if (isset($_POST['letter'])) {												//έλεγχος γράμματος
+	$_SESSION['used'][] = $_POST['letter'];
 	if (in_array($_POST['letter'], $_SESSION['word_array']) === FALSE) {
 		--$_SESSION['tries_left'];
 		echo "<h4> Λυπάμαι, το γράμμα που διάλεξες δεν υπάρχει στη λέξη</h4>";
@@ -51,7 +52,14 @@ if ($_SESSION['tries_left'] <= 0) {
 
 }
 else {
-	echo "<h4>Έχεις ".$_SESSION['tries_left']." προσπάθειες</h4> <br />";		
+	echo "<h4>Έχεις ".$_SESSION['tries_left']." προσπάθειες.";
+	if (isset($_POST['letter'])) {
+	echo "Έχεις χρησιμοποιήσει ήδη τα γράμματα: ";
+	foreach ($_SESSION['used'] as $v) {
+		echo $v.", ";
+	}
+	}
+	echo "</h4> <br />";		
 	$keys = array_keys($_SESSION['word_array'], $letter);					//το γράμμα υπάρχει στη λέξη
 	
 	for ($i=0; $i < count($keys); $i++) {
@@ -59,9 +67,9 @@ else {
 	}
 	echo "<h4>";
 	for ($i = 0; $i < count($_SESSION['print_word']); $i++) {
-		echo "<span id='game'>".$_SESSION['print_word'][$i]." </span>";
+		echo "<span class='game'>".$_SESSION['print_word'][$i]." </span>";
 	}
-	
+
 	if (!in_array('_', $_SESSION['print_word'])) {							//η λέξη συμπληρώθηκε
 		switch ($_SESSION['lives']) {
 			case '10':
@@ -96,10 +104,11 @@ function play_again() {
 ?>
 	<?php $letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω']; ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+	<br />
 	<h4>Δώσε ένα γράμμα:</h4><br />
 	<?php
 	for ($i = 0; $i < 24; $i++) {
-		echo "<input class='btn-sm' id='$letters[$i]' type='submit' name='letter' value=$letters[$i]>";		//να κάνω τα κουμπιά disabled!!!!!!!
+		echo "<input class='btn-sm buttons' id='$letters[$i]' type='submit' name='letter' value=$letters[$i]>";		
 	} 
 	?>
 	

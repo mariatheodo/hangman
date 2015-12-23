@@ -1414,6 +1414,8 @@ a.bg-danger:focus {
   padding-bottom: 9px;
   margin: 40px 0 20px;
   border-bottom: 1px solid #eeeeee;
+  text-align: center;
+  letter-spacing: 7px;
 }
 ul,
 ol {
@@ -2252,7 +2254,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: white;
 }
 caption {
   padding-top: 8px;
@@ -3426,7 +3428,7 @@ fieldset[disabled] .btn-link {
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #23527c;
+  color: #cc0000;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -3441,15 +3443,23 @@ fieldset[disabled] .btn-link:focus {
 .btn-group-lg > .btn {
   padding: 10px 16px;
   font-size: 18px;
-  line-height: 1.3333333;
-  border-radius: 6px;
+  line-height: 1.5;
+  border-radius: 7px;
+  border-color: red;
+  color: #ffff99;
+  background-color: red;
+  margin-top: 25px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 7px;
+  border-color: red;
+  color: #ffff99;
+  margin: 5px;
+  background-color: red;
 }
 .btn-xs,
 .btn-group-xs > .btn {
@@ -4701,8 +4711,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   padding-bottom: 30px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #ffb84d;
   min-height: 450px;
+  background-image: "img/hangmancrop.jpg";
 }
 .jumbotron h1,
 .jumbotron .h1 {

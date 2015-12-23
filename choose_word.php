@@ -1,21 +1,17 @@
 <?php
-//session_start();
-$a="COUNT(*)";															//στη μεταβλητή $a δίνω το count γιατί δεν το δέχεται αλλιώς
-																		//για να πάρω το πλήθος του πίνακα
-$count = "SELECT $a FROM words;";										//κάνω την ερώτηση
 
-$result = mysqli_query($conn, $count);									//αποτέλεσμα
-$row = mysqli_fetch_assoc($result);										
-
-$wid = mt_rand(1,$row[$a]);												//τυχαίο id από τον πίνακα word
-
-$sql = "SELECT * FROM words WHERE wid = $wid;";							//βρίσκω τη λέξη που αντιστοιχεί στο id
+$sql = "SELECT word FROM words;";							//βρίσκω όλες τις λέξεις 
 $result = mysqli_query($conn, $sql);
-
-$word = mysqli_fetch_assoc($result)["word"];
+$words = array();
+while ($row = mysqli_fetch_assoc($result)) {
+	$words[] = $row["word"];
+}
 
 mysqli_close($conn);
-$_SESSION['word'] = $word;
+$size = count($words);
+$wid = mt_rand(0, $size - 1);								//διαλέγω τυχαία λέξη
+$word = $words[$wid];	
 
+$_SESSION['word'] = $word;
 
 ?>

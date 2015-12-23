@@ -52,7 +52,6 @@ $lines = mysqli_query($conn, $sql2);
 					<td><?php echo $row['time']; ?></td>
 					<td><a href='delete_games.php?game=<?php echo $row['gid'] ?>'>OK </a></td>
 
-</form>
 				</tr>
 		<?php }  ?>
 	

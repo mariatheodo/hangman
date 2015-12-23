@@ -38,6 +38,7 @@ $lines = mysqli_query($conn, $sql2);
 		<tr>
 			<th>Α/Α</th>
 			<th>Λέξη</th>
+			<th>Επεξεργασία</th>
 			<th>Διαγραφή</th>
 		</tr>
 	</thead>
@@ -46,7 +47,8 @@ $lines = mysqli_query($conn, $sql2);
 				<tr>
 					<td><?php echo $row['wid']; ?></td>
 					<td><?php echo $row['word']; ?></td>
-					<td><a href='delete_words.php?word=<?php echo $row['wid'] ?>'>OK </a></td>
+					<td><a href='edit_words.php?word=<?php echo $row['word']?>&id=<?php echo $row['wid']?>'>OK </a></td>
+					<td><a href='delete_words.php?word=<?php echo $row['wid']?>'>OK </a></td>
 				</tr>
 		<?php }  ?>
 	
