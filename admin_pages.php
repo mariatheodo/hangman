@@ -6,13 +6,13 @@ include_once 'header.html';
 <h3>Σελίδα διαχείρισης</h3>
 <h3>Τι θέλεις να κάνεις;</h3>
 	<div class="row center-block">
-		<form action="index.php" method="POST">
-			<input class="btn btn-default btn-sm" type="submit" value="Διαχείριση λέξεων" formaction="admin_words.php">
-			<input class="btn btn-default btn-sm" type="submit" value="Διαχείριση παιχνιδιών" formaction="admin_games.php">
-			<input class="btn btn-default btn-sm" type="submit" value="Λίστα παικτών" formaction="admin_players.php">
+		
+			<a href="admin_words.php"><button class="btn btn-default btn-lg">Διαχείριση λέξεων</button></a>
+			<a href="admin_games.php"><button class="btn btn-default btn-lg">Διαχείριση παιχνιδιών</button></a>
+			<a href="admin_players.php"><button class="btn btn-default btn-lg">Λίστα παικτών</button></a>
 			<br />
-			<input class="btn btn-default btn-lg" type="submit" value="Πίσω" name="back">
-		</form>
+			<a href="index.php"><button class="btn btn-default btn-lg">Πίσω</button></a>
+		
 	</div>
 
 </div>

@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hangman";
+$username = "mis28";
+$password = "j48d5ZZ8";
+$dbname = "mis28";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);		//γίνεται η σύνδεση με τη βάση
 if (!$conn) {												

@@ -50,7 +50,7 @@ $lines = mysqli_query($conn, $sql2);
 					<td><?php echo $row['user']; ?></td>
 					<td><?php echo $row['points']; ?></td>
 					<td><?php echo $row['time']; ?></td>
-					<td><a href='delete_games.php?game=<?php echo $row['gid'] ?>'>OK </a></td>
+					<td><a href='delete_games.php?game=<?php echo $row['gid'] ?>&page=<?php echo $page?>'><button class="btn btn-default ">OK</button></a></td>
 
 				</tr>
 		<?php }  ?>
@@ -62,24 +62,22 @@ $next = $page + 1;
 $last = $page - 1;
 if ($page == 0) {
 		if ($num > $limit) {
-			echo "<a href='admin_games.php?page=".$next."'>Επόμενα ".$limit." παιχνίδια</a>";
+			echo "<a href='admin_games.php?page=".$next."'>Επόμενα παιχνίδια</a>";
 		}
 		else {}
 	}
 	else if ($page > 0 && $left > $limit) {
-		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα ".$limit." παιχνίδια</a> | ";
-		echo "<a href='admin_games.php?page=".$next."'>Επόμενα ".$limit." παιχνίδια</a>";
+		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα παιχνίδια</a> | ";
+		echo "<a href='admin_games.php?page=".$next."'>Επόμενα παιχνίδια</a>";
 	}
 	else if($left < $limit) {
-		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα ".$limit." παιχνίδια</a>";
+		echo "<a href='admin_games.php?page=".$last."'>Προηγούμενα παιχνίδια</a>";
 	}
 	mysqli_close($conn);
 ?>
 <br />
 
-<form action="admin_games.php" method="POST">
-	<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
-</form>
+<a href="admin_pages.php"><button class="btn btn-default btn-lg">Πίσω</button></a>
 </div>
 </div>
 </body>

@@ -2,6 +2,7 @@
 include_once 'header.html';
 include_once 'connect.php';
 $delete = $_GET['game'];
+$page = $_GET['page'];
 
 $sql = "DELETE FROM games WHERE games.gid = '$delete'";
 if (mysqli_query($conn, $sql)) {
@@ -14,6 +15,4 @@ mysqli_close($conn);
 
 ?>
 
-<form action="admin_games.php" method="POST">
-	<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
-</form>
+<a href="admin_games.php?page=<?php echo $page ?>"><button class="btn btn-default btn-lg">Πίσω</button></a>

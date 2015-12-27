@@ -5,6 +5,7 @@ echo "<h2>Επεξεργασία λέξης</h2>";
 
 $word = $_GET['word'];
 $id = $_GET['id'];
+$page = $_GET['page'];
 
 if (isset($_POST['new'])) {
 	update($_POST['new'], $id);
@@ -40,6 +41,4 @@ function update($new, $id) {
 	mysqli_close($conn);
 }
 ?>
-<form action="admin_words.php" method="POST">
-	<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
-</form>
+<a href="admin_words.php?page=<?php echo $page ?>"><button class="btn btn-default btn-lg">Πίσω</button></a>

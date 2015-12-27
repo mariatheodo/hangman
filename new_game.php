@@ -7,7 +7,8 @@ if ($_GET['new'] == 'false') {
 	$points = $_SESSION['points'];
 	$sql1 = "SELECT * FROM users WHERE user='$player';";
 	$result = mysqli_query($conn, $sql1);
-	$uid = mysqli_fetch_assoc($result)['uid'];	
+	$row = mysqli_fetch_assoc($result);
+	$uid = $row['uid'];	
 	$sql2 = "INSERT INTO games (uid, points) VALUES ('$uid', '$points');";
 	mysqli_query($conn, $sql2);
 	

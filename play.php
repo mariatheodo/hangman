@@ -1,3 +1,8 @@
+
+<head>
+<meta content="el" http-equiv="Content-Language">
+</head>
+
 <?php
 session_start();
 include_once 'header.html';
@@ -11,7 +16,7 @@ if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει sess
 
 	$_SESSION['tries_left'] = $_SESSION['lives'];
 	
-	$len = mb_strlen($word);											
+	$len = mb_strlen($word) / 2;											
 	$_SESSION['word_array'] = mb_str_split($word);							//μετατροπή σε πίνακα
 	$print_word = array();
 	$print_word[0] = $_SESSION['word_array'][0];
@@ -102,7 +107,7 @@ function play_again() {
 	echo '<a href="new_game.php?new=false"><button class="btn-sm">OXI</button></a>';
 }
 ?>
-	<?php $letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω']; ?>
+	<?php $letters = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'); ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 	<br />
 	<h4>Δώσε ένα γράμμα:</h4><br />

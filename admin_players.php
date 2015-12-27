@@ -1,7 +1,4 @@
 <?php
-if (isset($_POST['back'])) {
-	header("Location: admin_pages.php"); 
-}
 
 include_once 'header.html';
 echo "<h2>Λίστα παικτών</h2>";
@@ -70,8 +67,7 @@ if ($page == 0) {
 ?>
 <br />
 
-<form action="admin_players.php" method="POST">
-	<input class="btn btn-default btn-lg" name="back" type="submit" value="Πίσω">
+<a href="admin_pages.php"><button class="btn btn-default btn-lg">Πίσω</button></a>
 </form>
 </div>
 </div>
