@@ -1,6 +1,8 @@
 <?php
 
-$sql = "SELECT word FROM words;";							//βρίσκω όλες τις λέξεις 
+// γίνεται επιλογή λέξης από τη βάση με τυχαίο τρόπο
+
+$sql = "SELECT word FROM words;";							//βρίσκει όλες τις λέξεις 
 $result = mysqli_query($conn, $sql);
 $words = array();
 while ($row = mysqli_fetch_assoc($result)) {
@@ -9,7 +11,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 mysqli_close($conn);
 $size = count($words);
-$wid = mt_rand(0, $size - 1);								//διαλέγω τυχαία λέξη
+$wid = mt_rand(0, $size - 1);								//διαλέγει τυχαία λέξη κάθε φορά
 $word = $words[$wid];	
 
 $_SESSION['word'] = $word;

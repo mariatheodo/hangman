@@ -3,32 +3,32 @@
 require 'header.html';
 $page = $_GET['page'];
 		
-echo "<h2>Εισαγωγή λέξης</h2>";
+echo "<h2>Αναζήτηση λέξης</h2>";
 		
-// αν δόθηκε λέξη, την εισάγει στη βάση
+// αν δόθηκε λέξη, την ψάχνει στη βάση
 if (isset($_POST['new'])) {
 	$new = $_POST['new'];
 	include_once 'connect.php';
-	$sql = "INSERT INTO words (word) VALUES ('$new')";
+	$sql = "SELECT word FROM words WHERE word='$new'";
 	mysqli_query($conn, $sql);
 			
 		
 	echo "<div class='row'>";
-		if (mysqli_affected_rows($conn) > 0) {
+	if (mysqli_affected_rows($conn) > 0) {
 				
-			// μήνυμα επιτυχούς εισαγωγής
-			echo "<h3>Η εισαγωγή της λέξης ολοκληρώθηκε</h3>";
-		}
-		else {
-			// μήνυμα αποτυχίας εισαγωγής
-			echo "<h3>Η εισαγωγή της λέξης απέτυχε</h3>";
-		}
+		// μήνυμα επιτυχούς εισαγωγής
+		echo "<h3>Η λέξη ".$new." υπάρχει στη βάση</h3>";
+	}
+	else {
+		// μήνυμα αποτυχίας εισαγωγής
+		echo "<h3>Η λέξη ".$new." δεν υπάρχει στη βάση</h3>";
+	}
 	echo "</div>";
 		
 }
 else {
-?>
-	<h3>Ποιά λέξη θέλεις να εισάγεις;</h3>
+	?>
+	<h3>Ποιά λέξη θέλεις να ψάξεις;</h3>
 			
 	<!-- φόρμα για εισαγωγή λέξης -->
 	<form action="" method="POST">
@@ -45,6 +45,7 @@ else {
 	</form>
 			
 <?php } ?>
+<a href="search_words.php?page=<?php echo $page; ?>"><button class="btn btn-default btn-lg">Αναζήτηση άλλης λέξης</button></a>
 <a href="admin_words.php?page=<?php echo $page; ?>"><button class="btn btn-default btn-lg">Πίσω</button></a>
 
 

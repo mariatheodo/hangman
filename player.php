@@ -1,9 +1,12 @@
 <?php
 session_start();
+
+// αν το όνομα χρήστη είναι 'admin' ανακατεύθυνση στη σελίδα του διαχειριστή
 if ($_POST['name'] == 'admin') {
 	header("Location: admin.php");
 }
 
+// για τους άλλους παίκτες
 else {
 	include_once 'connect.php';
 	$_SESSION['player'] = $_POST['name'];
@@ -17,9 +20,12 @@ else {
 	}
 	
 	mysqli_close($conn);
+	
+	// θέτει το επίπεδο που διάλεξε ο χρήστης
 	if (isset($_POST['level'])) {
 		$_SESSION['lives'] = $_POST['level'];
 	}
+	// αν δεν έγινε επιλογή επιπέδου, τότε θα παίξει με το δύσκολο επίπεδο
 	else {
 		$_SESSION['lives'] = 5;
 	}

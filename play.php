@@ -1,24 +1,43 @@
 
-<head>
-<meta content="el" http-equiv="Content-Language">
-</head>
+<?php 
+function mb_str_split($string) { 
+
+    return preg_split('/(?<!^)(?!$)/u', $string ); 				//σπάει το string σε array χαρακτηρων, δεν δουλεύει η str_split
+} 
+
+function play_again() {
+	echo '<div class="col-sm-6">Έχεις συγκεντρώσει '.$_SESSION['points'].' πόντους</div>
+		<div class="col-sm-6">Θέλεις να ξαναπαίξεις;</div><br />';
+	echo '<a href="new_game.php?new=true"><button class="btn-sm">ΝΑΙ</button></a>';
+	echo '<a href="new_game.php?new=false"><button class="btn-sm">OXI</button></a>';
+}
+
+require 'header.html'; 
+session_start();
+?>
+
+<div class='row'>
+	<div class='col-sm-6'>
+		<h2>Καλωσήρθες <?php echo $_SESSION['player']; ?></h2>
+	</div>
+	<div style="float:right;">
+		<a href='player_games.php'><button class='btn btn-default btn-lg'>Δες όλα τα παιχνίδια</button></a>
+	</div>
+</div>
 
 <?php
-session_start();
-include_once 'header.html';
-
-echo "<h2>Καλωσήρθες ".$_SESSION['player']."</h2>";
-
-
-if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει session διαλέγει λέξη
+// αν δεν υπάρχει το $_SESSION['word'], τότε διαλέγει λέξη
+if (!isset($_SESSION['word'])) {											
 	include_once 'connect.php';
 	include_once 'choose_word.php';
 
 	$_SESSION['tries_left'] = $_SESSION['lives'];
 	
-	$len = mb_strlen($word) / 2;											
-	$_SESSION['word_array'] = mb_str_split($word);							//μετατροπή σε πίνακα
+	$len = mb_strlen($word);											
+	$_SESSION['word_array'] = mb_str_split($word);							//μετατροπή λέξης σε πίνακα χαρακτήρων
 	$print_word = array();
+	
+	// ο παίκτης θα δει μόνο το πρώτο και το τελευταίο γράμμα της λέξης, τα ενδιάμεσα αντικαθίστανται από παύλες
 	$print_word[0] = $_SESSION['word_array'][0];
 	for ($i = 1; $i < $len - 1; $i++) {
 		$print_word[$i] = "_";
@@ -28,10 +47,10 @@ if (!isset($_SESSION['word'])) {											//αν τώρα ξεκινάει sess
 	$_SESSION['used'] = array();
 }
 
-//echo "<br />";
-
-if (isset($_POST['letter'])) {												//έλεγχος γράμματος
+if (isset($_POST['letter'])) {												// έλεγχος γράμματος
 	$_SESSION['used'][] = $_POST['letter'];
+	
+	// αν το γράμμα δεν υπάρχει στη λέξη
 	if (in_array($_POST['letter'], $_SESSION['word_array']) === FALSE) {
 		--$_SESSION['tries_left'];
 		echo "<h4> Λυπάμαι, το γράμμα που διάλεξες δεν υπάρχει στη λέξη</h4>";
@@ -45,37 +64,49 @@ else {
 	$letter = '';
 }
 
+// αν οι προσπάθειες τελείωσαν
 if ($_SESSION['tries_left'] <= 0) {												
 	echo "<h4> Οι προσπάθειές σου τελείωσαν. Έπαιζες με τη λέξη ".$_SESSION['word']."</h4>";
 	
 	echo "<br />";
 	echo "<br />";
 	play_again();
-
-	
-	
-
 }
 else {
 	echo "<h4>Έχεις ".$_SESSION['tries_left']." προσπάθειες.";
 	if (isset($_POST['letter'])) {
-	echo "Έχεις χρησιμοποιήσει ήδη τα γράμματα: ";
-	foreach ($_SESSION['used'] as $v) {
-		echo $v.", ";
-	}
+		
+		// εμφάνιση γραμμάτων που έχουν χρησιμοποιηθεί
+		echo "Έχεις χρησιμοποιήσει ήδη τα γράμματα: ";
+		foreach ($_SESSION['used'] as $v) {
+			echo $v.", ";
+		}
 	}
 	echo "</h4> <br />";		
-	$keys = array_keys($_SESSION['word_array'], $letter);					//το γράμμα υπάρχει στη λέξη
+	$keys = array_keys($_SESSION['word_array'], $letter);					//αν το γράμμα υπάρχει στη λέξη
 	
 	for ($i=0; $i < count($keys); $i++) {
 		$_SESSION['print_word'][$keys[$i]] = $letter;
 	}
-	echo "<h4>";
+	echo "<h4 id='word'>";
+	// αντικατάσταση γραμμάτων στη λέξη
 	for ($i = 0; $i < count($_SESSION['print_word']); $i++) {
 		echo "<span class='game'>".$_SESSION['print_word'][$i]." </span>";
 	}
+	if (in_array('_', $_SESSION['print_word'])) {
+		$letters = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'); ?>
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+			<br />
+			<h4>Δώσε ένα γράμμα:</h4><br />
+	
+			<!-- εμφάνιση κουμπιών γραμμάτων -->
+			<?php
+			for ($i = 0; $i < 24; $i++) {
+				echo "<input class='btn-sm buttons' id='$letters[$i]' type='submit' name='letter' value=$letters[$i]>";		
+			}
+	} 
 
-	if (!in_array('_', $_SESSION['print_word'])) {							//η λέξη συμπληρώθηκε
+	if (!in_array('_', $_SESSION['print_word'])) {							//η λέξη συμπληρώθηκε, βαθμολόγηση παίκτη
 		switch ($_SESSION['lives']) {
 			case '10':
 				$points = 20 + $_SESSION['tries_left'] * 10;
@@ -95,30 +126,11 @@ else {
 	echo "</h4>";
 }
 
-function mb_str_split($string) { 
 
-    return preg_split('/(?<!^)(?!$)/u', $string ); 							//σπαω το string σε array χαρακτηρων, δεν δουλεύει η str_split
-} 
-
-function play_again() {
-	echo '<div class="col-sm-6">Έχεις συγκεντρώσει '.$_SESSION['points'].' πόντους</div>
-		<div class="col-sm-6">Θέλεις να ξαναπαίξεις;</div><br />';
-	echo '<a href="new_game.php?new=true"><button class="btn-sm">ΝΑΙ</button></a>';
-	echo '<a href="new_game.php?new=false"><button class="btn-sm">OXI</button></a>';
-}
 ?>
-	<?php $letters = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'); ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-	<br />
-	<h4>Δώσε ένα γράμμα:</h4><br />
-	<?php
-	for ($i = 0; $i < 24; $i++) {
-		echo "<input class='btn-sm buttons' id='$letters[$i]' type='submit' name='letter' value=$letters[$i]>";		
-	} 
-	?>
+
 	
-	</form>
-	</div>
+</form>
 </div>
-</body>
-</html>
+
+<?php require 'footer.php'; ?>
