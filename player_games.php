@@ -1,5 +1,5 @@
 <?php
-//αν έχει πατηθεί το "back" τότε επιστρέφει στην σελίδα παιχνιδιού
+//αν έχει πατηθεί το "Πίσω" τότε επιστρέφει στην σελίδα παιχνιδιού
 if (isset($_POST['back'])) {
 	header("Location: play.php"); 
 } 
@@ -33,11 +33,11 @@ $left = $num - $offset;
 
 
 
-
+// ερώτημα στην sql βάση
 $sql2 = "SELECT gid, user, points, time FROM games, users WHERE games.uid=users.uid ORDER BY gid LIMIT $offset, $limit;";						
 $lines = mysqli_query($conn, $sql2); 
 ?>
-
+<!-- δημιουργία πίνακα -->
 <table class="table table-hover table-bordered">
 	<thead>
 		<tr>
